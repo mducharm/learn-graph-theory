@@ -4,8 +4,8 @@
 <div class="container main">
   <section class="hero is-medium is-link">
     <div class="hero-body">
-      <p class="title">Graphs</p>
-      <p class="subtitle">A visual introduction to graph theory</p>
+      <p class="title">Graph Theory</p>
+      <p class="subtitle">A visual introduction</p>
     </div>
   </section>
   <section class="section content">
