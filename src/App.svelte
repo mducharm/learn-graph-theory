@@ -1,30 +1,38 @@
 <script>
-	export let name;
-</script>
-
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
+	import ScrollableView from "./components/ScrollableView.svelte";
+	import Graph from "./components/Graph.svelte";
+  </script>
+  
+  <div class="app">
+	<ScrollableView />
+	<Graph />
+  </div>
+  
+  <style>
+	:global(body) {
+	  margin: 0;
+	  font-family: Arial, Helvetica, sans-serif;
 	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+  
+	.app {
+	  display: flex;
+	  flex-flow: column-reverse nowrap;
+	  min-height: 100vh;
 	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+  
+	@media only screen and (min-width: 800px) {
+	  .app {
+		flex-flow: row nowrap;
+	  }
 	}
-</style>
+  
+	@keyframes App-logo-pulse {
+	  from {
+		transform: scale(1);
+	  }
+	  to {
+		transform: scale(1.06);
+	  }
+	}
+  </style>
+  
