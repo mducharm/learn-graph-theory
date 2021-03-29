@@ -6,6 +6,7 @@ export let sections = [
       A graph is a collection of dots and lines, also known these are vertices
       (or nodes) and edges.
       `,
+        layout: "circle",
         graph: [
             {
                 // node a
@@ -33,6 +34,7 @@ export let sections = [
       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
       est laborum.
       `,
+        layout: "circle",
         graph: [
             {
                 data: { id: "a" },
@@ -62,6 +64,8 @@ export let sections = [
       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
       est laborum.
       `,
+
+        layout: "circle",
         graph: [],
         el: null,
     },
@@ -77,6 +81,7 @@ export let sections = [
       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
       est laborum.
       `,
+        layout: "circle",
         graph: [],
         el: null,
     },
@@ -92,6 +97,8 @@ export let sections = [
       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
       est laborum.
       `,
+
+        layout: "circle",
         graph: [],
         el: null,
     },

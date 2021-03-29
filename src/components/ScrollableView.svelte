@@ -1,7 +1,7 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import { sections } from "../content";
-  import { graphElements } from "../stores/graph.store";
+  import { graphStore } from "../stores/graph.store";
 
 
   let observer = new IntersectionObserver(
@@ -10,9 +10,11 @@
         let idx = entries[0].target.id.split("_")[1];
         console.log(idx);
         let section = sections[idx];
-        let graph = section.graph;
 
-        graphElements.set(graph);
+        graphStore.set({
+          layout: section.layout,
+          elements: section.graph
+        });
       }
     },
     { threshold: [0.8] }

@@ -16,5 +16,10 @@ let initialGraph = [
     },
   ];
 
-export const graphElements = writable(initialGraph);
+const initial = {
+    elements: initialGraph,
+    layout: "circle"
+}
+
+export const graphStore = writable(initial);
 

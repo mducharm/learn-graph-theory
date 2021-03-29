@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { graphElements } from "../stores/graph.store";
+  import { graphStore } from "../stores/graph.store";
   import cytoscape from "cytoscape";
 
   let el;
@@ -10,22 +10,6 @@
     cy = cytoscape({
       container: el, // container to render in
       wheelSensitivity: 0.3,
-      elements: [
-        // list of graph elements to start with
-        {
-          // node a
-          data: { id: "a" },
-        },
-        {
-          // node b
-          data: { id: "b" },
-        },
-        {
-          // edge ab
-          data: { id: "ab", source: "a", target: "b" },
-        },
-      ],
-
       style: [
         // the stylesheet for the graph
         {
@@ -54,11 +38,11 @@
       },
     });
 
-    graphElements.subscribe((elements) => {
+    graphStore.subscribe((store) => {
       cy.elements().remove();
-      cy.add(elements);
+      cy.add(store.elements);
       cy.layout({
-        name: "circle",
+        name: store.layout
       }).run();
     });
   });
