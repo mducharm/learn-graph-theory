@@ -1,4 +1,32 @@
 <script>
+  import { onMount, onDestroy } from "svelte";
+  import { sections } from "../content";
+  import { graphElements } from "../stores/graph.store";
+
+
+  let observer = new IntersectionObserver(
+    function (entries) {
+      if (entries[0].isIntersecting === true) {
+        let idx = entries[0].target.id.split("_")[1];
+        console.log(idx);
+        let section = sections[idx];
+        let graph = section.graph;
+
+        graphElements.set(graph);
+      }
+    },
+    { threshold: [0.8] }
+  );
+
+  onMount(() => {
+    for (let section of sections) {
+      observer.observe(section.el);
+    }
+  });
+
+  onDestroy(() => {
+    observer.disconnect();
+  });
 </script>
 
 <div class="container main">
@@ -8,59 +36,17 @@
       <p class="subtitle">A visual introduction</p>
     </div>
   </section>
-  <section class="section content">
-    <h1 class="title">Section</h1>
-    <h2 class="subtitle">
-      A simple container to divide your page into <strong>sections</strong>,
-      like the one you're currently reading.
-    </h2>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </p>
-  </section>
 
-  <section class="section content">
-    <h1>Scroll view</h1>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </p>
-  </section>
-  <section class="section content">
-    <h1>Scroll view</h1>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </p>
-  </section>
-  <section class="section content">
-    <h1>Scroll view</h1>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </p>
-  </section>
+  {#each sections as section, i}
+    <section class="section content" bind:this={section.el} id="section_{i}">
+      <h2 class="subtitle">
+        {section.title}
+      </h2>
+      <p>
+        {section.contents}
+      </p>
+    </section>
+  {/each}
 </div>
 
 <style>
@@ -79,11 +65,19 @@
     display: none;
   }
 
+  .section {
+    min-height: 50vh;
+  }
+
   @media screen and (min-width: 800px) {
     .main {
       min-width: 50%;
       max-height: 100vh;
       overflow-y: auto;
+    }
+
+    .section {
+      min-height: 100vh;
     }
   }
 </style>
