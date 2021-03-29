@@ -3,17 +3,16 @@
   import { sections } from "../content";
   import { graphStore } from "../stores/graph.store";
 
-
   let observer = new IntersectionObserver(
     function (entries) {
       if (entries[0].isIntersecting === true) {
         let idx = entries[0].target.id.split("_")[1];
-        console.log(idx);
         let section = sections[idx];
+        // console.log(idx);
 
         graphStore.set({
           layout: section.layout,
-          elements: section.graph
+          elements: section.graph,
         });
       }
     },
@@ -31,23 +30,35 @@
   });
 </script>
 
-<div class="container main">
-  <section class="hero is-medium is-link">
-    <div class="hero-body">
-      <p class="title">Graph Theory</p>
-      <p class="subtitle">A visual introduction</p>
-    </div>
-  </section>
-
+<div class="main">
   {#each sections as section, i}
-    <section class="section content" bind:this={section.el} id="section_{i}">
-      <h2 class="subtitle">
-        {section.title}
-      </h2>
-      <p>
-        {section.contents}
-      </p>
-    </section>
+    {#if i === 0}
+      <section
+        class="hero is-large is-info"
+        bind:this={section.el}
+        id="section_{i}"
+      >
+        <div class="hero-body">
+          <h1 class="title">Graph Theory</h1>
+          <p class="subtitle">A visual introduction</p>
+        </div>
+      </section>
+    {:else}
+      <section
+        class="section is-medium content"
+        bind:this={section.el}
+        id="section_{i}"
+      >
+        <div class="container">
+          <h1 class="subtitle">
+            {section.title ?? ""}
+          </h1>
+          <p>
+            {section.contents}
+          </p>
+        </div>
+      </section>
+    {/if}
   {/each}
 </div>
 
@@ -67,7 +78,8 @@
     display: none;
   }
 
-  .section {
+  .section,
+  .hero {
     min-height: 50vh;
   }
 
