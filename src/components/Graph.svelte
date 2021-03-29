@@ -2,6 +2,9 @@
   import { onMount } from "svelte";
   import { graphStore } from "../stores/graph.store";
   import cytoscape from "cytoscape";
+  import cola from 'cytoscape-cola';
+
+  cytoscape.use( cola );
 
   let el;
   let cy;
