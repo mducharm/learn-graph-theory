@@ -1,11 +1,13 @@
 <script>
   import { onMount } from "svelte";
+  import { graphElements } from "../stores/graph.store";
   import cytoscape from "cytoscape";
 
   let el;
+  let cy;
 
   onMount(() => {
-    let cy = cytoscape({
+    cy = cytoscape({
       container: el, // container to render in
       wheelSensitivity: 0.3,
       elements: [
@@ -51,6 +53,14 @@
         rows: 1,
       },
     });
+
+    graphElements.subscribe((elements) => {
+      cy.elements().remove();
+      cy.add(elements);
+      cy.layout({
+        name: "circle",
+      }).run();
+    });
   });
 </script>
 
@@ -72,5 +82,4 @@
       max-height: 100vh;
     }
   }
-
 </style>
